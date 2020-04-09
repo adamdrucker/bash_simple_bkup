@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Cron job set to run this script weekly on Tuesdays @ 15:00
+# and on Thursdays @ 17:00
+# Currently, being manually backed up to Google Drive
+
 # Init date
 TODAY=$(date +%d-%m-%Y)
 
