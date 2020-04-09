@@ -1,1 +1,2 @@
-# bash_simple_bkup
+# Simple script to backup my local Docs
+# and /etc/passwd just incase
