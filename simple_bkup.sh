@@ -24,9 +24,11 @@ echo "Backup includes:"
 sleep 1s
 echo "/home/$USER/Documents"
 sleep 1s
+echo "/home/$USER/.bashrc"
+sleep 1s
 echo "/etc/passwd"
 
-tar -zcf /home/$USER/Backups/"$TODAY"_backup.tar.gz /home/$USER/Documents /etc/passwd 2>/dev/null 
+tar -zcf /home/$USER/Backups/"$TODAY"_backup.tar.gz /home/$USER/Documents /home/$USER/.bashrc /etc/passwd 2>/dev/null 
 
 if [ $? == "0" ]; then
 	echo "Backup successful."
