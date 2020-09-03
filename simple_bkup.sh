@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Cron job set to run this script weekly on Tuesdays @ 15:00
-# and on Thursdays @ 17:00
+# Cron job set to run this script weekly on Tuesdays @ 12:00
+# and on Thursdays @ 12:00
 # Currently, being manually backed up to Google Drive
 
 # Init date
