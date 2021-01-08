@@ -3,6 +3,7 @@
 # Cron job set to run this script weekly on Tuesdays @ 12:00
 # and on Thursdays @ 12:00
 # Currently, being manually backed up to Google Drive
+# --> Can now use `gupload` (Jan 2021)
 
 # Init date
 TODAY=$(date +%d-%m-%Y)
@@ -15,9 +16,9 @@ COUNT=$(ls $BACKUPDIR -t | wc -l)
 
 
 back_up_files() {
-	tar -zcf /home/$USER/Backups/"$TODAY"_backup.tar.gz /home/$USER/Documents /home/$USER/.bashrc /etc/passwd 2>/dev/null 
+	tar -zcf /home/$USER/Backups/"$TODAY"_backup.tar.gz /home/$USER /etc/passwd 2>/dev/null 
 }
-
+# Removed from above `/home/$USER/Documents /home/$USER/.bashrc`
 
 back_up_dir() {
 	if [ $COUNT -gt "4" ]; then
@@ -39,9 +40,7 @@ fi
 echo "Starting backup for $(date +%A) $(date +%d-%b-%Y)..."
 echo "Backup includes:"
 sleep 1s
-echo "/home/$USER/Documents"
-sleep 1s
-echo "/home/$USER/.bashrc"
+echo "/home/$USER"
 sleep 1s
 echo "/etc/passwd"
 
