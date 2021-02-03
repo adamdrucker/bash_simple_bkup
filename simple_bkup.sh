@@ -16,16 +16,17 @@ COUNT=$(ls $BACKUPDIR -t | wc -l)
 
 
 back_up_files() {
-	tar -zcf /home/$USER/Backups/"$TODAY"_backup.tar.gz /home/$USER /etc/passwd 2>/dev/null 
+	tar -zc -X /home/adam/Documents/bash_scripts/simple_bkup/exclude.txt -f /home/$USER/Backups/"$TODAY"_backup.tar.gz /home/$USER /etc/passwd 
 }
-# Removed from above `/home/$USER/Documents /home/$USER/.bashrc`
+
+# Removed from above `/home/$USER/Documents /home/$USER/.bashrc` && /home/$USER/Documents /home/$USER/.bashrc /home/$USER/.google* /home/$USER/.ssh /home/$USER/.vimrc /home/$USER/.bash_aliases /    home/$USER/.apps
 
 back_up_dir() {
 	if [ $COUNT -gt "4" ]; then
 		cd $BACKUPDIR
 		ls -t $BACKUPDIR | tail -n +5 | xargs rm -f
 		cd ~
-		tar -czvf /home/$USER/Backups.tar.gz /home/$USER/Backups 2>/dev/null
+		# tar -czvf /home/$USER/Backups.tar.gz /home/$USER/Backups 2>/dev/null
 	fi
 }
 
@@ -34,20 +35,20 @@ if [ $? == "1" ]; then
 	mkdir "/home/$USER/Backups"
 fi
 
-# Perform backup of user Documents
-# and /etc/passwd
 #---------------------------------
 echo "Starting backup for $(date +%A) $(date +%d-%b-%Y)..."
-echo "Backup includes:"
-sleep 1s
-echo "/home/$USER"
-sleep 1s
-echo "/etc/passwd"
 
 back_up_files
 
 if [ $? == "0" ]; then
 	echo "File backup successful."
+	echo "Starting upload to Google Drive..."
+	gupload /home/$USER/Backups/"$TODAY"_backup.tar.gz
+	if [ $? == "0" ]; then
+		echo "GUpload successful."
+	else
+		echo "GUpload failed."
+	fi
 else
 	echo "File backup failed, please review."
 fi
@@ -55,7 +56,7 @@ fi
 back_up_dir
 
 if [ $? == "0" ]; then
-	echo "Directory backup successful."
+	echo "Directory cleanup successful."
 else
-	echo "Directory backup failed, please review."
+	echo "Directory cleanup failed, please review."
 fi
